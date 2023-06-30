@@ -4,7 +4,7 @@ from kebab import Kebab
 # from shop import Shop - TODO Circular dependency
 import time
 import itertools
-cont = itertools.count()
+counter = itertools.count()
 
 class Order():
 
@@ -16,8 +16,8 @@ class Order():
         grill = self.shop.takeGrill()
         print(PREPARING_KEBAB % grill)
         time.sleep(2)
-        kebab = Kebab(next(cont), self.meatType, 8.5)
-        print(PREPARED_KEBAB % (kebab.id(), self.meatType, grill))
-        if (self.shop.releaseGrill(grill)):
-            print(FREE_GRILL % grill)
+        kebab = Kebab(next(counter), self.meatType, 8.5)
+        print(PREPARED_KEBAB % (kebab.id, kebab.meatType, grill))
+        self.shop.releaseGrill(grill)
+        print(FREE_GRILL % grill)
         return kebab

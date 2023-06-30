@@ -10,12 +10,9 @@ class Customer:
 
     def eatKebab(self):
         seat = self.shop.takeSeat()
-
         kebab = self.shop.order(MeatType.random()).result()
-
-        print(START_EAT_KEBAB % (seat, kebab.id()))
+        print(START_EAT_KEBAB % (seat, kebab.id))
         time.sleep(1)
-        print(FINISH_EAT_KEBAB % (seat, kebab.id()))
-
-        if (self.shop.pay(seat)):
-            print(FREE_SEAT % seat)
+        print(FINISH_EAT_KEBAB % (seat, kebab.id))
+        self.shop.pay(seat)
+        print(FREE_SEAT % seat)

@@ -25,11 +25,11 @@ class Shop():
         order = Order(self, meatType)
         return self.pool.submit(order.prepareKebab)
     
-    def pay(self, seat: int):
+    def pay(self, seat: int) -> None:
         self.seats.put(seat)
 
     def takeGrill(self) -> int:
         return self.grills.get()
     
-    def releaseGrill(self, grill: int):
+    def releaseGrill(self, grill: int) -> None:
         self.grills.put(grill)
