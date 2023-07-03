@@ -1,4 +1,4 @@
-from concurrent.futures import ThreadPoolExecutor, Future
+from concurrent.futures import ProcessPoolExecutor, Future
 from constants import FULL_SHOP
 from meat_type import MeatType
 from kebab import Kebab
@@ -7,24 +7,17 @@ from queue import Queue
 
 class Shop():
 
-    def __init__(self, pool: ThreadPoolExecutor, numberOfSeats: int, numberOfGrills: int):
-        self.pool = pool
+    def __init__(self, numberOfSeats: int, numberOfGrills: int):
         self.seats = Queue(numberOfSeats)
         for i in range(0, numberOfSeats): self.seats.put(i)
         self.grills = Queue(numberOfGrills)
         for i in range(0, numberOfGrills): self.grills.put(i)
-            
-        self.numberOfGrills = numberOfGrills
 
     def takeSeat(self) -> int:
         if self.seats.empty():
             print(FULL_SHOP)
         return self.seats.get()
-    
-    def order(self, meatType: MeatType) -> Future[Kebab]:
-        order = Order(self, meatType)
-        return self.pool.submit(order.prepareKebab)
-    
+        
     def pay(self, seat: int) -> None:
         self.seats.put(seat)
 
